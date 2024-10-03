@@ -5,11 +5,15 @@ const useFetch = (type = null, fetchJoke = false, setFetchJoke = null) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Ei toiminut yhdellä useEffectillä, tuli niin vaikea, että tällä tyylillä oli helpompi
+
+  // Tämä haetaan VAIN kerran, eli ei ole riippuvuustaulukoita
   useEffect(() => {
     let tmp_url = "https://official-joke-api.appspot.com/types";
     fetchUrl(tmp_url);
   }, []);
 
+  // Tämä haetaan VAIN kun nappi on asetettuna true. fetchUrl() jälkeen nappi asetetaan false.
   useEffect(() => {
     if (type && fetchJoke) {
       let tmp_url =

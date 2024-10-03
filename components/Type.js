@@ -6,6 +6,7 @@ import useFetch from "../hooks/useFetch";
 export default function Type({ selectedType, setSelectedType }) {
   const { data, loading, error } = useFetch();
 
+  // Kun dataa tulee, aseta valinta ensimmäiseen alkion arvoon
   useEffect(() => {
     if (data.length > 0) {
       setSelectedType(data[0]);
@@ -20,6 +21,7 @@ export default function Type({ selectedType, setSelectedType }) {
     return <Text>Error: {error}</Text>;
   }
 
+  // map datan läpi. Generoi taulukko ja aseta valittu tilamuuttujaan
   return (
     <Picker
       style={styles.picker}
