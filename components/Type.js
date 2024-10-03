@@ -1,18 +1,16 @@
-import { View, StyleSheet, Text } from "react-native";
-import React, { useEffect, useState } from "react";
+import { StyleSheet, Text } from "react-native";
+import React, { useEffect } from "react";
 import { Picker } from "@react-native-picker/picker";
-import useFetchTypes from "../hooks/useFetchTypes";
+import useFetch from "../hooks/useFetch";
 
-export default function Type() {
-  const [selectedType, setSelectedType] = useState("");
-  const { jokeTypes, loading, error } = useFetchTypes();
+export default function Type({ selectedType, setSelectedType }) {
+  const { data, loading, error } = useFetch();
 
   useEffect(() => {
-    if (jokeTypes.length > 0) {
-      setSelectedType(jokeTypes[0]);
-      console.log("napin default: " + selectedType);
+    if (data.length > 0) {
+      setSelectedType(data[0]);
     }
-  }, [jokeTypes]);
+  }, [data]);
 
   if (loading) {
     return <Text>Loading...</Text>;
@@ -23,29 +21,25 @@ export default function Type() {
   }
 
   return (
-    <View style={styles.container}>
-      <Picker
-        style={styles.picker}
-        selectedValue={selectedType}
-        onValueChange={(itemValue) => setSelectedType(itemValue)}
-        mode="dialog"
-      >
-        {jokeTypes.map((type, index) => (
-          <Picker.Item key={index} label={type} value={type} />
-        ))}
-      </Picker>
-    </View>
+    <Picker
+      style={styles.picker}
+      selectedValue={selectedType}
+      onValueChange={(itemValue) => setSelectedType(itemValue)}
+      mode="dialog"
+    >
+      {data.map((type, index) => (
+        <Picker.Item key={index} label={type} value={type} />
+      ))}
+    </Picker>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
+  // Picker ei suostu toimimaan ilman tyylejä ??!!
+  // Ja tässä ei halua toimia mikään relative es. width: '80%'
   picker: {
     height: 50,
     width: 250,
-    // backgroundColor: "cyan",
+    // backgroundColor: "cyan" // DEBUG
   },
 });

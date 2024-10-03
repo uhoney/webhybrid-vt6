@@ -1,18 +1,31 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
 import Joke from "./components/Joke";
 import Type from "./components/Type";
-import React from "react";
+import React, { useState } from "react";
 
 export default function App() {
+  const [selectedType, setSelectedType] = useState("");
+  const [fetchJoke, setFetchJoke] = useState(false);
+
+  const handleFetchJoke = () => {
+    setFetchJoke(true);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Jokes demo (vt6)</Text>
-      <Text style={styles.text}>
+      <Text style={styles.headerSmall}>
         Pick a category or just get a general joke
       </Text>
-      <Type />
-      <Joke />
+      <View style={styles.typeAndButton}>
+        <Type selectedType={selectedType} setSelectedType={setSelectedType} />
+        <Button title="fetch joke" onPress={handleFetchJoke} />
+      </View>
+      <Joke
+        selectedType={selectedType}
+        fetchJoke={fetchJoke}
+        setFetchJoke={setFetchJoke}
+      />
     </View>
   );
 }
@@ -28,8 +41,12 @@ const styles = StyleSheet.create({
     fontSize: 26,
     paddingBottom: 14,
   },
-  text: {
+  headerSmall: {
     fontSize: 12,
-    padding: 8,
+    paddingBottom: 16,
+  },
+  typeAndButton: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
