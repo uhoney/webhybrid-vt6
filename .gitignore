@@ -1,5 +1,10 @@
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
+# APIKEY
+**/*.env
+**/.env*.local
+
+
 # dependencies
 node_modules/
 
@@ -33,3 +38,6 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# PDF
+*.pdf
